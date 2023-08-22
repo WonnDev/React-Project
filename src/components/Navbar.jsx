@@ -30,7 +30,7 @@ const Navbar = () => {
       <div className="container">
         <NavLink className="navbar-brand fw-bold fs-4 px-2" to="/">
           {" "}
-          React Ecommerce Web
+          React Project
         </NavLink>
         <button
           className="navbar-toggler mx-2"
