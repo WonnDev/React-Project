@@ -12,8 +12,6 @@ import Papa from "papaparse";
 import { toast } from "react-toastify";
 import "./TableUser.scss";
 
-
-
 const TableUsers = (props) => {
   const [listUsers, setListUsers] = useState([]);
   const [totalUsers, setTotalUser] = useState(0);
@@ -44,14 +42,15 @@ const TableUsers = (props) => {
   };
 
   const handleUpdateTable = (user) => {
-    setListUsers([user,...listUsers])
+    setListUsers([user, ...listUsers]);
   };
 
   const handleEditUserFromModal = (user) => {
     // let cloneListUsers = [...listUsers]; // same index memory save => change 1 -> 2 changed too
     let cloneListUsers = _.cloneDeep(listUsers); // cloneDeep has clone and changed index memory save state
-    let index = listUsers.findIndex(item => item.id === user.id); //find id in list === id user to handleChange
+    let index = listUsers.findIndex((item) => item.id === user.id); //find id in list === id user to handleChange
     cloneListUsers[index].first_name = user.first_name;
+    cloneListUsers[index].email = user.email;
 
     setListUsers(cloneListUsers);
   };
@@ -65,10 +64,8 @@ const TableUsers = (props) => {
   const getUser = async (page) => {
     let res = await fetchAllUser(page); //asynchronous
 
-    // console.log(">> check new res: ", res)
-
     if (res && res.data) {
-      setTotalUser(res.total)
+      setTotalUser(res.total);
       setTotalPages(res.total_pages);
       setListUsers(res.data);
     }
@@ -77,7 +74,6 @@ const TableUsers = (props) => {
   //handle of react-paginate
   const handlePageClick = (e) => {
     getUser(+e.selected + 1); // + for convert e to string
-    console.log("number of e library: ", e);
   };
 
   const handleEdit = (user) => {
@@ -92,7 +88,7 @@ const TableUsers = (props) => {
 
   const handleDeleteUserFromModal = (user) => {
     let cloneListUsers = _.cloneDeep(listUsers);
-    cloneListUsers = cloneListUsers.filter(item => item.id !== user.id);
+    cloneListUsers = cloneListUsers.filter((item) => item.id !== user.id);
     setListUsers(cloneListUsers);
   };
   //sort
@@ -102,18 +98,19 @@ const TableUsers = (props) => {
 
     let cloneListUsers = _.cloneDeep(listUsers);
     cloneListUsers = _.orderBy(cloneListUsers, [sortField], [sortBy]); // orderBy from lodash (excellent *)
-    // console.log("check after sort: ",cloneListUsers);
     setListUsers(cloneListUsers);
   };
 
   const handleSearch = debounce((event) => {
     let term = event.target.value;
     // setInputSearch(term)
-    if(term) {
-      //this call API too much without func Debounce outside 
+    if (term) {
+      //this call API too much without func Debounce outside
       //this function just filter on filtered list
       let cloneListUsers = _.cloneDeep(listUsers);
-      cloneListUsers = cloneListUsers.filter(item => item.email.includes(term)) //TODO: here is includes of string not array
+      cloneListUsers = cloneListUsers.filter((item) =>
+        item.email.includes(term)
+      ); //TODO: here is includes of string not array
       setListUsers(cloneListUsers);
     } else {
       getUser(1);
@@ -123,98 +120,79 @@ const TableUsers = (props) => {
   // inreal API, willbe fix
 
   //handle custom getUserExport
-  const getUserExport = (event, done) => { //function done run
+  const getUserExport = (event, done) => {
+    //function done run
     let result = [];
-    if(listUsers && listUsers.length > 0){ //build table data
+    if (listUsers && listUsers.length > 0) {
+      //build table data
       result.push(["Id", "Email", "First name", "Last name"]); //create header
-      listUsers.map((item, index) => { //build body
+      listUsers.map((item, index) => {
+        //build body
         let arr = [];
         arr[0] = item.id;
         arr[1] = item.email;
         arr[2] = item.first_name;
         arr[3] = item.last_name;
         result.push(arr);
-      })
+      });
       setDataExport(result);
       done();
     }
-  }
+  };
 
   const handleImportCSV = (event) => {
-    if(event.target && event.target.files && event.target.files[0]) {
+    if (event.target && event.target.files && event.target.files[0]) {
       let file = event.target.files[0]; //only 1 file so chosse index 0
 
-      if(file.type !== "text/csv") {
-        toast.error("Only accept CSV file...")
+      if (file.type !== "text/csv") {
+        toast.error("Only accept CSV file...");
         return;
       }
       //Parse local CSV File
       Papa.parse(file, {
         header: true,
         complete: function (results) {
-    //       // custom require
-          // let rawCSV = results.data;
-          // if(rawCSV.length > 0){
-          //   if(rawCSV[0] && rawCSV[0].length === 3){
-          //     if(rawCSV[0][0] !== "firstname"
-          //     ||rawCSV[0][1] !== "lastname"
-          //     ||rawCSV[0][2] !== "email"
-          //     ) {
-          //       toast.error("Wrong format Header on CSV file!");
-          //     } else {
-          //       let result = [];
-
-          //       rawCSV.map((item, index)=> {
-          //         if(index > 0 && item.length === 3){ //raw1 >0
-          //           let obj = [];
-          //           obj.email = item[0]
-          //           obj.first_name = item[1]
-          //           obj.last_name = item[2]
-          //           result.push(obj);
-          //          } 
-          //       })
-          //       setListUsers(result)
-          //     }
-          //   } else {
-          //     toast.error("Wrong format data on CSV file!");
-          //   }
-          // } else {
-          // toast.error("Wrong format data on CSV file!");
-          // }
-
           let rawCSV = results.data;
-          if(rawCSV.length > 0){
+          if (rawCSV.length > 0) {
             let result = [];
-            rawCSV.map((item, index)=> {
-              if(index > 0){
+            rawCSV.map((item, index) => {
+              if (index > 0) {
                 let obj = [];
-                obj.email = item[0]
-                obj.firstname = item[1]
-                obj.lastname = item[2]
+                obj.email = item[0];
+                obj.firstname = item[1];
+                obj.lastname = item[2];
                 result.push(obj);
-                }
-            })
+              }
+            });
             toast.success("Import CSV success!");
-            setListUsers(result)
+            setListUsers(result);
           }
-
-          console.log("Finish:",results.data);
-        }
-      })
+        },
+      });
     }
-    
-  }
+  };
 
   return (
     <>
-      <ButtonAddNew handleShow={() => setShowModalAddNew(true)} />
       <div>
-        <label className="btn btn-warning mx-2" htmlFor="test">
-          <i className="fa-solid fa-file-arrow-up"></i> Import</label>
+        <span>
+          <b>CSV File:</b>
+        </span>
+        <label
+          className="btn btn-warning mx-2"
+          htmlFor="test"
+          style={{ margin: "16px 0" }}
+        >
+          <i className="fa-solid fa-file-arrow-up" /> Import
+        </label>
 
         <input
-          id="test" type="file" hidden
-          onChange={(event) => {handleImportCSV(event)}}
+          id="test"
+          type="file"
+          hidden
+          onChange={(event) => {
+            handleImportCSV(event);
+          }}
         />
 
         <CSVLink
@@ -223,15 +201,18 @@ const TableUsers = (props) => {
           data={dataExport}
           asyncOnClick={true} //waiting for onClick run first then get data from dataExport
           onClick={getUserExport}
-        ><i className="fa-solid fa-file-arrow-down"></i> Export</CSVLink>
+        >
+          <i className="fa-solid fa-file-arrow-down" /> Export
+        </CSVLink>
         {/* <CSVDownload data={csvData} target="_blank"/> */}
       </div>
+      <ButtonAddNew handleShow={() => setShowModalAddNew(true)} />
       <div className="col-12 col-sm-4 mb-3">
         <input
-        className="form-control"
-        placeholder="Search user by email..."
-        // value={inputSearch}
-        onChange={(event) => handleSearch(event)}
+          className="form-control"
+          placeholder="Search user by email..."
+          // value={inputSearch}
+          onChange={(event) => handleSearch(event)}
         />
       </div>
       <div className="customize-table">
@@ -243,12 +224,12 @@ const TableUsers = (props) => {
                   <span>ID</span>
                   <span>
                     <i
-                    className="fa-solid fa-arrow-up"
-                    onClick={() => handleSort("desc", "id")}
+                      className="fa-solid fa-arrow-up"
+                      onClick={() => handleSort("desc", "id")}
                     ></i>
                     <i
-                    className="fa-solid fa-arrow-down"
-                    onClick={() => handleSort("asc", "id")}
+                      className="fa-solid fa-arrow-down"
+                      onClick={() => handleSort("asc", "id")}
                     ></i>
                   </span>
                 </div>
@@ -284,12 +265,20 @@ const TableUsers = (props) => {
                     <td>{item.first_name}</td>
                     <td>{item.last_name}</td>
                     <td>
-                      <button className="btn btn-warning mx-sm-3"
-                          onClick={() => handleEdit(item)}
-                      >Edit</button>
-                      <button className="btn btn-danger"
-                          onClick={() => handleDelete(item)}
-                      >Del</button>
+                      <button
+                        className="btn btn-warning mx-sm-3"
+                        onClick={() => {
+                          handleEdit(item);
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => handleDelete(item)}
+                      >
+                        Del
+                      </button>
                     </td>
                   </tr>
                 );
@@ -297,7 +286,7 @@ const TableUsers = (props) => {
           </tbody>
         </Table>
       </div>
-      
+
       <ReactPaginate
         breakLabel="..."
         nextLabel="next >"
@@ -333,7 +322,6 @@ const TableUsers = (props) => {
         handleClose={handleClose}
         dataUserDelete={dataUserDelete}
         handleDeleteUserFromModal={handleDeleteUserFromModal}
-
       />
     </>
   );

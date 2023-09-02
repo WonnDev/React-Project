@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import { Footer, Navbar } from "../components";
-import { checkForm, submitForm, clearForm } from "../firebase/contactWithRealtimeDB";
-import { checkFormFireStore, clearFormFirestore, checkAll, submitFormWithAuth } from "../firebase/contactWithFirestoreDB";
+import {
+  checkForm,
+  submitForm,
+  clearForm,
+} from "../firebase/contactWithRealtimeDB";
+import {
+  checkFormFireStore,
+  clearFormFirestore,
+  checkAll,
+  submitFormWithAuth,
+} from "../firebase/contactWithFirestoreDB";
 import { auth } from "../firebase/firebase";
 
 const ContactPage = () => {
@@ -11,16 +20,16 @@ const ContactPage = () => {
   const user = auth.currentUser;
 
   const handleClear = () => {
-    clearFormFirestore({user});
+    clearFormFirestore({ user });
   };
 
   const handleCheck = () => {
-    checkFormFireStore({user});
-  }
+    checkFormFireStore({ user });
+  };
   const handleCheckAll = () => {
-    checkAll({user});
-  }
-  
+    checkAll({ user });
+  };
+
   const handleSubmit = () => {
     if (!name || !email) {
       console.log("Name & Email are required!");
@@ -70,7 +79,7 @@ const ContactPage = () => {
                 />
               </div>
               <div className="text-center">
-              <button
+                <button
                   className="my-2 px-4 btn btn-dark mr-1"
                   type="button"
                   onClick={handleCheckAll}

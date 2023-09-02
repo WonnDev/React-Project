@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { UserContext } from "../context/UserContext";
+import React from "react";
 
 const Homechild = (props) => {
   const { child1, child2 } = props;
@@ -12,12 +11,10 @@ const Homechild = (props) => {
 };
 
 const UserHome = () => {
-  //useContext
-  const { user } = useContext(UserContext);
-
   return (
     <>
-      {user && user.auth === true ? (
+      {/* {user && user.auth === true ? ( */}
+      {sessionStorage ? (
         <Homechild
           child1="Wellcome to my homepage..."
           child2="Please visit Manage Users."
@@ -25,11 +22,10 @@ const UserHome = () => {
       ) : (
         <Homechild
           child1="Wellcome to my homepage...You are not Login..."
-          child2={"Please Login at Setting/Login."}
+          child2={"Please visit Manage Users"}
         />
       )}
     </>
-    // <Homechild child1={"Please Login..."} child2="Homepage is building... Please visit Manage Users" />
   );
 };
 

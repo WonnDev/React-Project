@@ -13,7 +13,7 @@ const Navbar = () => {
       <i className="fa fa-sign-in-alt mr-1"></i> Logout
     </NavLink>
   );
-  const HadNotLogin = () => (
+  const NotLogin = () => (
     <NavLink to="/login" className="btn btn-outline-dark m-2">
       <i className="fa fa-sign-in-alt mr-1"></i> Login
     </NavLink>
@@ -76,7 +76,10 @@ const Navbar = () => {
                 </b>
               </span>
             )}
-            {user ? <HadLogin /> : <HadNotLogin />}
+            <NavLink to="/user/login" className="btn btn-outline-dark m-2">
+              <i className="fa fa-sign-in-alt mr-1"></i> Login V2
+            </NavLink>
+            {user ? <HadLogin /> : <NotLogin />}
             <NavLink to="/register" className="btn btn-outline-dark m-2">
               <i className="fa fa-user-plus mr-1"></i> Register
             </NavLink>

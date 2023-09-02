@@ -3,7 +3,7 @@ import "./Login.scss";
 import { useState, useEffect, useRef, useContext } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { handleLoginRedux } from "../redux/actions/userAction";
+import { handleLoginRedux } from "../redux/action/userAction";
 import { useDispatch, useSelector } from "react-redux";
 
 const UserLogin = () => {
@@ -13,19 +13,20 @@ const UserLogin = () => {
   //navigate
   const navigate = useNavigate();
 
-  const [email2, setEmail] = useState("");
-  const [password2, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const [clickedLogin, setClickedLogin] = useState(false);
   const isLoading = useSelector((state) => state?.user?.isLoading);
   const account = useSelector((state) => state?.user?.account);
 
   const handleLogin = async () => {
-    if (!email2 || !password2) {
+    if (!email || !password) {
       toast.error("Email/Password is required!");
       return;
     }
-    dispatch(handleLoginRedux(email2, password2));
+    // dispatch(handleLoginRedux(email, password));
+    sessionStorage.getItem("email", email);
   };
 
   const handleGoBack = () => {
@@ -1055,7 +1056,7 @@ const UserLogin = () => {
           type="email"
           id="loginEmail"
           maxLength="254"
-          value={email2}
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <p className="helper helper1">email@domain.com</p>
@@ -1067,7 +1068,7 @@ const UserLogin = () => {
         <input
           type="password"
           id="loginPassword"
-          value={password2}
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           // onKeyDown={(e) => handlePressEnter(e)}
         />

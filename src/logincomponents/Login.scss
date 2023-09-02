@@ -156,10 +156,11 @@ body {
   @media only screen and (max-width: 576px) {
 	.container{
 		.add-new{
-			button.btn-success{
-				position: relative;
-				top: 3.39em;
-			}
+		// 	button.btn-success{
+		// 		position: relative;
+		// 		top: 3.39em;
+		// 	}
+		margin-bottom:1rem;
 		}
 		div.my-3{
 			margin-bottom: 0 !important;

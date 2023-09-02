@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Footer, Navbar, Product } from "../components";
 
 const Products = () => {
@@ -8,7 +8,7 @@ const Products = () => {
       <Product />
       <Footer />
     </>
-  )
-}
+  );
+};
 
-export default Products
+export default Products;

@@ -14,8 +14,8 @@ export const handleLoginRedux = (email, password) => {
 
     let res = await loginApi(email, password);
     if (res && res.token) {
-      localStorage.setItem('token', res.token);
-      localStorage.setItem('email', email.trim());
+      localStorage.setItem("token", res.token);
+      localStorage.setItem("email", email.trim());
 
       dispatch({
         type: FETCH_USER_SUCCESS,
@@ -34,18 +34,18 @@ export const handleLoginRedux = (email, password) => {
 };
 
 export const handleLogoutRedux = () => {
-    //in real project just call API to kill session.
-    return (dispatch, getState) => {
-        dispatch({
-            type: USER_LOGOUT
-        })
-    }
+  //in real project just call API to kill session.
+  return (dispatch, getState) => {
+    dispatch({
+      type: USER_LOGOUT,
+    });
+  };
 };
 
 export const handleRefresh = () => {
-    return (dispatch, getState) => {
-        dispatch({
-            type: USER_REFRESH
-        })
-    }
+  return (dispatch, getState) => {
+    dispatch({
+      type: USER_REFRESH,
+    });
+  };
 };

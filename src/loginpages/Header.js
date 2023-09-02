@@ -5,14 +5,11 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../assets/images/logo192.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleLogoutRedux } from "../redux/actions/userAction";
+import { handleLogoutRedux } from "../redux/action/userAction";
 
-const Header = (props) => {
-  //hideHeader without login
-  const [hideHeader, setHideHeader] = useState(false);
-
+const Header = () => {
   const navigate = useNavigate();
 
   const user = useSelector((state) => state?.user?.account);
@@ -38,6 +35,7 @@ const Header = (props) => {
               width="30"
               height="30"
               className="d-inline-block align-top"
+              alt="logo"
             />
             <span> ReactJS Project</span>
           </Navbar.Brand>
@@ -47,11 +45,11 @@ const Header = (props) => {
               <NavLink to="/user/home" className="nav-link">
                 Home
               </NavLink>
-              {user && user.auth && (
-                <NavLink to="/user" className="nav-link">
-                  Manage Users
-                </NavLink>
-              )}
+              {/* {user && user.auth && ( */}
+              <NavLink to="/user" className="nav-link">
+                Manage Users
+              </NavLink>
+              {/* )} */}
             </Nav>
             <Nav>
               {user && user.email && (
@@ -65,7 +63,7 @@ const Header = (props) => {
                     Logout
                   </NavDropdown.Item>
                 ) : (
-                  <NavLink to="user/login" className="dropdown-item">
+                  <NavLink to="/user/login" className="dropdown-item">
                     Login
                   </NavLink>
                 )}

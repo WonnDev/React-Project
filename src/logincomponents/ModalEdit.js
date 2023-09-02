@@ -7,13 +7,15 @@ const ModalEdit = (props) => {
   const { show, handleClose, dataUserEdit, handleEditUserFromModal } = props;
   const [name, setName] = useState("");
   const [job, setJob] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleEditUser = async () => {
-    let res = await putUpdateUser(name, job);
+    let res = await putUpdateUser(name, email, job);
     if (res && res.updatedAt) {
       //success
       handleEditUserFromModal({
         first_name: name,
+        email: email,
         id: dataUserEdit.id,
       });
       handleClose();
@@ -25,6 +27,7 @@ const ModalEdit = (props) => {
     if (show) {
       // when close modal, it dont run
       setName(dataUserEdit.first_name);
+      setEmail(dataUserEdit.email);
     }
   }, [dataUserEdit]);
 
@@ -43,6 +46,16 @@ const ModalEdit = (props) => {
                 placeholder="Username"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Email:</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Form.Group>
 
