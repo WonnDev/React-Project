@@ -49,8 +49,9 @@ const TableUsers = (props) => {
     // let cloneListUsers = [...listUsers]; // same index memory save => change 1 -> 2 changed too
     let cloneListUsers = _.cloneDeep(listUsers); // cloneDeep has clone and changed index memory save state
     let index = listUsers.findIndex((item) => item.id === user.id); //find id in list === id user to handleChange
-    cloneListUsers[index].first_name = user.first_name;
     cloneListUsers[index].email = user.email;
+    cloneListUsers[index].first_name = user.first_name;
+    cloneListUsers[index].last_name = user.last_name;
 
     setListUsers(cloneListUsers);
   };

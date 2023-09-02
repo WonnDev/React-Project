@@ -5,12 +5,12 @@ const fetchAllUser = (page) => {
   return axios.get(`/api/users?page=${page}`);
 };
 
-const postCreateUser = (name, email, job) => {
-  return axios.post("/api/users/", { name, email, job }); // name: name, job: job
+const postCreateUser = (name, lastName, email, job) => {
+  return axios.post("/api/users/", { name, lastName, email, job });
 };
 
-const putUpdateUser = (name, email, job) => {
-  return axios.put("/api/users/", { name, email, job });
+const putUpdateUser = (name, lastName, email, job) => {
+  return axios.put("/api/users/", { name, lastName, email, job });
 };
 
 const deleteUser = (id) => {

@@ -7,16 +7,16 @@ const ModalAddNew = (props) => {
   const { show, handleClose, handleUpdateTable } = props;
 
   const [name, setName] = useState("");
-  const [job, setJob] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
 
   const handleEditUser = async () => {
-    let res = await putUpdateUser(name, email, job);
+    let res = await putUpdateUser(name, email, lastName);
     console.log("check update: ", res);
   };
 
   const handleSaveUser = async () => {
-    let res = await postCreateUser(name, email, job);
+    let res = await postCreateUser(name, email, lastName);
     console.log("check res from API CreateUser: ", res);
 
     if (res && res.id) {
@@ -24,9 +24,14 @@ const ModalAddNew = (props) => {
       handleClose();
       setName("");
       setEmail("");
-      setJob("");
+      setLastName("");
       toast.success("A User is created success!");
-      handleUpdateTable({ first_name: name, email: email, id: res.id });
+      handleUpdateTable({
+        first_name: name,
+        last_name: lastName,
+        email: email,
+        id: res.id,
+      });
     } else {
       //err
       toast.error("An error...");
@@ -42,16 +47,6 @@ const ModalAddNew = (props) => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3">
-              <Form.Label>Username:</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Username"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
               <Form.Label>Email:</Form.Label>
               <Form.Control
                 type="text"
@@ -62,12 +57,22 @@ const ModalAddNew = (props) => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>Jobs:</Form.Label>
+              <Form.Label>First Name:</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Jobs"
-                value={job}
-                onChange={(e) => setJob(e.target.value)}
+                placeholder="First Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Last Name:</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Last Name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
             </Form.Group>
           </Form>
