@@ -18,15 +18,15 @@ const UserLogin = () => {
 
   const [clickedLogin, setClickedLogin] = useState(false);
   const isLoading = useSelector((state) => state?.user?.isLoading);
-  const account = useSelector((state) => state?.user?.account);
+  const user = useSelector((state) => state?.user?.account);
 
   const handleLogin = async () => {
     if (!email || !password) {
       toast.error("Email/Password is required!");
       return;
     }
-    // dispatch(handleLoginRedux(email, password));
-    sessionStorage.getItem("email", email);
+    dispatch(handleLoginRedux(email, password));
+    // sessionStorage.getItem("email", email);
   };
 
   const handleGoBack = () => {
@@ -35,8 +35,8 @@ const UserLogin = () => {
 
   //check login with redux then navigate
   useEffect(() => {
-    if (account && account.auth === true) navigate("/");
-  }, [account]);
+    if (user && user.auth === true) navigate("/user");
+  }, [user]);
 
   // const handlePressEnter = (e) => {
   //   if(e && e.key === 'Enter'){
@@ -44,7 +44,7 @@ const UserLogin = () => {
   //   }
   // }
 
-  //loginpage dta
+  //loginpage assets
   useEffect(() => {
     console.log("All assets are loaded");
     var emailLabel = document.querySelector("#loginEmailLabel"),
@@ -360,7 +360,7 @@ const UserLogin = () => {
     function onEmailFocus(e) {
       activeElement = "email";
       e.target.parentElement.classList.add("focusWithText");
-      //stopBlinking();
+      // stopBlinking();
       //calculateFaceMove();
       onEmailInput();
     }
@@ -850,7 +850,7 @@ const UserLogin = () => {
               />
               <path
                 style={{
-                  display: "none",
+                  display: "block",
                   d: "M100 110.2c-9 0-16.2-7.3-16.2-16.2 0-2.3 1.9-4.2 4.2-4.2h24c2.3 0 4.2 1.9 4.2 4.2 0 9-7.2 16.2-16.2 16.2z",
                   fill: "#617e92",
                 }}

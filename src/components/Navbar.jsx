@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { signOutWithGoogle, auth } from "../firebase/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const state = useSelector((state) => state.handleCart);
+  const state = useSelector((state) => state?.handleCart);
+  const userV2 = useSelector((state) => state?.user?.account);
 
   const [user, setUser] = useState(null);
+
+  const navigate = useNavigate();
 
   const HadLogin = () => (
     <NavLink className="btn btn-outline-dark m-2" onClick={signOutWithGoogle}>
@@ -24,6 +28,13 @@ const Navbar = () => {
       setUser(user);
     });
   }, []);
+
+  //check login
+  useEffect(() => {
+    if (user && user.auth) {
+      navigate("/");
+    }
+  }, [user]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light py-3 sticky-top">
@@ -68,14 +79,47 @@ const Navbar = () => {
             </li>
           </ul>
           <div className="buttons text-center">
-            {user && (
+            {user && user.auth && (
               <span className="nav-link">
                 Welcome{" "}
                 <b>
-                  {user.name} ({user.email})
+                  {user.displayName} ({user.email}){" "}
+                  {!user.photoURL ? null : (
+                    <>
+                      <img
+                        src={user.photoURL}
+                        style={{
+                          width: "35px",
+                          borderRadius: "100%",
+                          border: "1px solid lightgray",
+                        }}
+                      />
+                    </>
+                  )}
                 </b>
               </span>
             )}
+            {userV2 && userV2.auth === true && (
+              <span className="nav-link">
+                Welcome{" "}
+                <b>
+                  {userV2.displayName} ({userV2.email}){" "}
+                  {!userV2.photoURL ? null : (
+                    <>
+                      <img
+                        src={userV2.photoURL}
+                        style={{
+                          width: "35px",
+                          borderRadius: "100%",
+                          border: "1px solid lightgray",
+                        }}
+                      />
+                    </>
+                  )}
+                </b>
+              </span>
+            )}
+
             <NavLink to="/user/login" className="btn btn-outline-dark m-2">
               <i className="fa fa-sign-in-alt mr-1"></i> Login V2
             </NavLink>

@@ -6,7 +6,7 @@ import {
   USER_REFRESH,
 } from "../action/userAction";
 
-const INITIAL_STATE = {
+const INITIALSTATE = {
   account: {
     email: "",
     auth: null,
@@ -17,15 +17,17 @@ const INITIAL_STATE = {
   // accounts: localStorage.get('') ? localStorage.get('') : []
 };
 
-const userReducer = (state = INITIAL_STATE, action) => {
+const userReducer = (state = INITIALSTATE, action) => {
   switch (action.type) {
     case FETCH_USER_LOGIN:
+      console.log("FETCH_USER_CheckAction: ", action);
       return {
         ...state,
         isLoading: true,
         isError: false,
       };
     case FETCH_USER_ERROR:
+      console.log("FETCH_USER_CheckAction: ", action);
       return {
         ...state,
         account: {
@@ -47,8 +49,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         isError: false,
       };
     case USER_LOGOUT:
-      localStorage.removeItem("email");
-      localStorage.removeItem("token");
+      console.log("FETCH_USER_CheckAction: ", action);
       return {
         ...state,
         account: {
@@ -58,6 +59,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         },
       };
     case USER_REFRESH:
+      console.log("FETCH_USER_CheckAction: ", action);
       return {
         ...state,
         account: {
@@ -66,7 +68,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
           auth: true,
         },
       };
-
     default:
       return state;
   }

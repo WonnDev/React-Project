@@ -16,7 +16,7 @@ export const handleLoginRedux = (email, password) => {
     if (res && res.token) {
       localStorage.setItem("token", res.token);
       localStorage.setItem("email", email.trim());
-
+      toast.success("Login Success!");
       dispatch({
         type: FETCH_USER_SUCCESS,
         data: { email: email.trim(), token: res.token },
@@ -36,6 +36,9 @@ export const handleLoginRedux = (email, password) => {
 export const handleLogoutRedux = () => {
   //in real project just call API to kill session.
   return (dispatch, getState) => {
+    localStorage.removeItem("email");
+    localStorage.removeItem("token");
+    toast.success("You had been Logout!");
     dispatch({
       type: USER_LOGOUT,
     });

@@ -20,8 +20,8 @@ const Header = () => {
   };
   useEffect(() => {
     if (user && user.auth === false && window.location.pathname !== "/login") {
-      navigate("/login");
-      toast.success("You had been Logout!");
+      navigate("/user/login");
+      // toast.success("You had been Logout!");
     }
   }, [user]);
 
