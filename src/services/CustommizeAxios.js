@@ -8,7 +8,6 @@ const instance = axios.create({
 
 instance.interceptors.response.use(
   function (response) {
-    console.log("CustomizeAxios: ", response);
     return response.data ? response.data : { statusCode: response.status };
   },
   function (error) {

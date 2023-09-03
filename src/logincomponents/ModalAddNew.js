@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
-import { postCreateUser, putUpdateUser } from "../services/UserService";
+import { postCreateUser } from "../services/UserService";
 import { toast } from "react-toastify";
 
 const ModalAddNew = (props) => {
@@ -10,14 +10,9 @@ const ModalAddNew = (props) => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
 
-  const handleEditUser = async () => {
-    let res = await putUpdateUser(name, email, lastName);
-    console.log("check update: ", res);
-  };
-
   const handleSaveUser = async () => {
     let res = await postCreateUser(name, email, lastName);
-    console.log("check res from API CreateUser: ", res);
+    console.log("res API CreateUser: ", res);
 
     if (res && res.id) {
       //success
@@ -25,7 +20,7 @@ const ModalAddNew = (props) => {
       setName("");
       setEmail("");
       setLastName("");
-      toast.success("A User is created success!");
+      toast.success("Create user successed!");
       handleUpdateTable({
         first_name: name,
         last_name: lastName,

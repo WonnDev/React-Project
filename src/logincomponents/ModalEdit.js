@@ -10,7 +10,7 @@ const ModalEdit = (props) => {
   const [email, setEmail] = useState("");
 
   const handleEditUser = async () => {
-    let res = await putUpdateUser(name, email, lastName);
+    let res = await putUpdateUser(name, lastName, email);
     if (res && res.updatedAt) {
       //success
       handleEditUserFromModal({
@@ -20,6 +20,7 @@ const ModalEdit = (props) => {
         id: dataUserEdit.id,
       });
       handleClose();
+      console.log("res API UpdateUser: ", res);
       toast.success("Update User Success!");
     }
   };
