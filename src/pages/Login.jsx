@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Footer, Navbar } from "../components";
 import LoginWith from "./LoginWith";
 import { useDispatch } from "react-redux";
@@ -11,13 +11,23 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   const handleLogin = () => {
     if (!email || !password) {
       toast.error("Missing Email/Password");
       return;
     }
     dispatch(handleLoginRedux(email, password));
+    navigate("/");
   };
+
+  // useEffect(() => {
+  //   auth.onAuthStateChanged((user) => {
+  //     if (user) setUser(user);
+  //   });
+  //   console.log("from Login: ", user);
+  // }, [user]);
 
   return (
     <>

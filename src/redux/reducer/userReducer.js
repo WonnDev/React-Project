@@ -51,12 +51,7 @@ const userReducer = (state = INITIALSTATE, action) => {
     case USER_LOGOUT:
       console.log("FETCH_USER_CheckAction: ", action);
       return {
-        ...state,
-        account: {
-          email: "",
-          token: "",
-          auth: false,
-        },
+        ...INITIALSTATE,
       };
     case USER_REFRESH:
       console.log("FETCH_USER_CheckAction: ", action);

@@ -1,14 +1,11 @@
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { firestore, auth } from "./firebase";
 import { doc, setDoc } from "firebase/firestore";
 
 export const createUser = async (email, password, name) => {
   await createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      console.log("Created and Login Success!");
+      console.log("Create and Login Successed!");
       // ...
       const userRef = doc(firestore, "users", userCredential.user.uid);
       setDoc(
@@ -20,7 +17,6 @@ export const createUser = async (email, password, name) => {
         },
         { merge: false }
       );
-      console.log("addDoc Success!");
     })
     .catch((error) => console.log(error));
 };

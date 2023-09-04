@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signOutWithGoogle, auth } from "../firebase/firebase";
-import { useNavigate } from "react-router-dom";
 import { handleLogoutRedux } from "../redux/action/userAction";
 
 const Navbar = () => {
@@ -11,17 +10,17 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const [user, setUser] = useState(null);
-
   const navigate = useNavigate();
 
-  const handleLogoutAll = () => {
-    setUser(null);
-    signOutWithGoogle();
+  const handleLogout = () => {
     dispatch(handleLogoutRedux());
+    signOutWithGoogle();
+    setUser(null);
+    navigate("/login");
   };
 
   const HadLogin = () => (
-    <NavLink className="btn btn-outline-dark m-2" onClick={handleLogoutAll}>
+    <NavLink className="btn btn-outline-dark m-2" onClick={handleLogout}>
       <i className="fa fa-sign-in-alt mr-1"></i> Logout
     </NavLink>
   );
@@ -31,22 +30,15 @@ const Navbar = () => {
     </NavLink>
   );
 
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      setUser(user);
-    });
-    console.log(user);
-  }, []);
-
   //check login
   useEffect(() => {
-    if (userV2 && userV2.auth) {
-      setUser(userV2);
-    }
-    if (user && user.auth) {
-      navigate("/");
-    }
-  }, [user, userV2]);
+    auth.onAuthStateChanged((user) => {
+      if (user && user.auth) setUser(user);
+      if (userV2 && userV2.auth === true) {
+        setUser(userV2);
+      }
+    });
+  }, [userV2]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light py-3 sticky-top">
@@ -100,6 +92,7 @@ const Navbar = () => {
                     <>
                       <img
                         src={user.photoURL}
+                        alt="img"
                         style={{
                           width: "35px",
                           borderRadius: "100%",
@@ -135,7 +128,7 @@ const Navbar = () => {
             <NavLink to="/user/login" className="btn btn-outline-dark m-2">
               <i className="fa fa-sign-in-alt mr-1"></i> Login V2
             </NavLink>
-            {user ? <HadLogin /> : <NotLogin />}
+            {user && user.auth ? <HadLogin /> : <NotLogin />}
             <NavLink to="/register" className="btn btn-outline-dark m-2">
               <i className="fa fa-user-plus mr-1"></i> Register
             </NavLink>

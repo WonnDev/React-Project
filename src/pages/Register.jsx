@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Footer, Navbar } from "../components";
 import { Link } from "react-router-dom";
 import { createUser } from "../firebase/authentication";
+import { auth } from "../firebase/firebase";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setname] = useState("");
+  const [name, setName] = useState("");
+
+  //check login
+  const [user, setUser] = useState(null);
 
   const handleRegister = () => {
     if (!email || !password) {
@@ -14,7 +18,19 @@ const Register = () => {
       return;
     }
     createUser(email, password, name);
+    setEmail("");
+    setPassword("");
+    setName("");
+    setUser(null);
   };
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user && user.auth) {
+        setUser(user);
+      }
+    });
+  }, [user]);
 
   return (
     <>
@@ -25,20 +41,20 @@ const Register = () => {
         <div className="row my-4 h-100">
           <div className="col-md-4 col-lg-4 col-sm-8 mx-auto">
             <form>
-              <div className="form my-3">
-                <label htmlFor="Name">Full Name</label>
+              {/* <div className="form my-3">
+                <label htmlFor="Name">Your name</label>
                 <input
-                  type="name"
+                  type="text"
                   className="form-control"
                   id="Name"
-                  placeholder="Enter Your Name"
-                  onChange={(e) => setname(e.target.value)}
+                  placeholder="Your Name"
+                  onChange={(e) => setName(e.target.value)}
                 />
-              </div>
+              </div> */}
               <div className="form my-3">
                 <label htmlFor="Email">Email address</label>
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
                   id="Email"
                   placeholder="name@example.com"
@@ -73,6 +89,7 @@ const Register = () => {
                   className="my-2 mx-auto btn btn-dark"
                   type="button"
                   onClick={handleRegister}
+                  disabled={user && user.auth}
                 >
                   Register
                 </button>
