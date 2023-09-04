@@ -1,19 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signOutWithGoogle, auth } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
+import {
+  handleLoginRedux,
+  handleLogoutRedux,
+} from "../redux/action/userAction";
 
 const Navbar = () => {
   const state = useSelector((state) => state?.handleCart);
   const userV2 = useSelector((state) => state?.user?.account);
+  const dispatch = useDispatch();
 
   const [user, setUser] = useState(null);
 
   const navigate = useNavigate();
 
+  const handleLogoutAll = () => {
+    setUser(null);
+    signOutWithGoogle();
+    dispatch(handleLogoutRedux());
+  };
+
   const HadLogin = () => (
-    <NavLink className="btn btn-outline-dark m-2" onClick={signOutWithGoogle}>
+    <NavLink className="btn btn-outline-dark m-2" onClick={handleLogoutAll}>
       <i className="fa fa-sign-in-alt mr-1"></i> Logout
     </NavLink>
   );
@@ -27,14 +38,18 @@ const Navbar = () => {
     auth.onAuthStateChanged((user) => {
       setUser(user);
     });
+    console.log(user);
   }, []);
 
   //check login
   useEffect(() => {
+    if (userV2 && userV2.auth) {
+      setUser(userV2);
+    }
     if (user && user.auth) {
       navigate("/");
     }
-  }, [user]);
+  }, [user, userV2]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light py-3 sticky-top">
@@ -99,7 +114,7 @@ const Navbar = () => {
                 </b>
               </span>
             )}
-            {userV2 && userV2.auth === true && (
+            {/* {userV2 && userV2.auth === true && (
               <span className="nav-link">
                 Welcome{" "}
                 <b>
@@ -118,7 +133,7 @@ const Navbar = () => {
                   )}
                 </b>
               </span>
-            )}
+            )} */}
 
             <NavLink to="/user/login" className="btn btn-outline-dark m-2">
               <i className="fa fa-sign-in-alt mr-1"></i> Login V2

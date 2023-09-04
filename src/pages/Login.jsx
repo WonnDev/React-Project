@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Footer, Navbar } from "../components";
 import LoginWith from "./LoginWith";
+import { useDispatch } from "react-redux";
+import { handleLoginRedux } from "../redux/action/userAction";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+
   const handleLogin = () => {
-    console.log("Login!!!");
+    if (!email || !password) {
+      toast.error("Missing Email/Password");
+      return;
+    }
+    dispatch(handleLoginRedux(email, password));
   };
 
   return (
@@ -24,6 +35,7 @@ const Login = () => {
                   className="form-control"
                   id="floatingInput"
                   placeholder="name@example.com"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="my-3">
@@ -33,6 +45,7 @@ const Login = () => {
                   className="form-control"
                   id="floatingPassword"
                   placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="my-3">
