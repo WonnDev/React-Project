@@ -14,7 +14,7 @@ export const createUser = async (email, password, name) => {
       setDoc(
         userRef,
         {
-          username: name,
+          displayName: name,
           email: userCredential.user.email,
           created: { ...userCredential.user.metadata },
         },
