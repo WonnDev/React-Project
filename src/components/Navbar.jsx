@@ -3,10 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signOutWithGoogle, auth } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
-import {
-  handleLoginRedux,
-  handleLogoutRedux,
-} from "../redux/action/userAction";
+import { handleLogoutRedux } from "../redux/action/userAction";
 
 const Navbar = () => {
   const state = useSelector((state) => state?.handleCart);
