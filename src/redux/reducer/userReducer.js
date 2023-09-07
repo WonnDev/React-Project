@@ -50,6 +50,8 @@ const userReducer = (state = INITIALSTATE, action) => {
       };
     case USER_LOGOUT:
       console.log("FETCH_USER_CheckAction: ", action);
+      localStorage.removeItem("email");
+      localStorage.removeItem("token");
       return {
         ...INITIALSTATE,
       };

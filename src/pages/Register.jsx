@@ -26,11 +26,11 @@ const Register = () => {
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      if (user && user.auth) {
+      if (user) {
         setUser(user);
       }
     });
-  }, [user]);
+  }, []);
 
   return (
     <>
@@ -89,7 +89,7 @@ const Register = () => {
                   className="my-2 mx-auto btn btn-dark"
                   type="button"
                   onClick={handleRegister}
-                  disabled={user && user.auth}
+                  disabled={user || localStorage.email}
                 >
                   Register
                 </button>

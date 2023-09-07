@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Footer, Navbar } from "../components";
 import LoginWith from "./LoginWith";
 import { useDispatch } from "react-redux";
 import { handleLoginRedux } from "../redux/action/userAction";
 import { toast } from "react-toastify";
+import { auth } from "../firebase/firebase";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -19,15 +21,17 @@ const Login = () => {
       return;
     }
     dispatch(handleLoginRedux(email, password));
-    navigate("/");
+    // navigate("/");
   };
 
-  // useEffect(() => {
-  //   auth.onAuthStateChanged((user) => {
-  //     if (user) setUser(user);
-  //   });
-  //   console.log("from Login: ", user);
-  // }, [user]);
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user || localStorage.email) {
+        // setUser(user);
+        navigate("/");
+      }
+    });
+  }, []);
 
   return (
     <>

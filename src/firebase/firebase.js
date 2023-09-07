@@ -26,6 +26,7 @@ export const signInWithGoogle = () => {
     .then(async (result) => {
       try {
         //...
+        localStorage.setItem("email", result.user.email);
       } catch (err) {
         console.log("Error trying Signin: ", err);
       }
@@ -39,4 +40,6 @@ export const signInWithGoogle = () => {
 
 export const signOutWithGoogle = () => {
   auth.signOut();
+  localStorage.removeItem("email");
+  localStorage.removeItem("token");
 };

@@ -6,6 +6,7 @@ export const createUser = async (email, password, name) => {
   await createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       console.log("Create and Login Successed!");
+      localStorage.setItem("email", email);
       // ...
       const userRef = doc(firestore, "users", userCredential.user.uid);
       setDoc(

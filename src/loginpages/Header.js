@@ -19,7 +19,7 @@ const Header = () => {
     dispatch(handleLogoutRedux());
   };
   useEffect(() => {
-    if (user && user.auth === false && window.location.pathname !== "/login") {
+    if (user && user.auth === false) {
       navigate("/user/login");
       // toast.success("You had been Logout!");
     }
