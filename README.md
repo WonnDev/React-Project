@@ -9,7 +9,7 @@ A Ecommerce Website made with React.js Framework.
 
 ## Screenshots
 
-![App Screenshot](https://i.ibb.co/fQ293tm/image.png)
+![Alt text](src/images/imagepreview1.png) ![Alt text](src/images/imagepreview2.png) ![Alt text](src/images/imagepreview3.png) ![Alt text](src/images/imagepreview4.png) ![Alt text](src/images/imagepreview5.png) ![Alt text](src/images/imagepreview6.png) ![Alt text](src/images/imagepreview7.png) ![Alt text](src/images/imagepreview8.png)
 
 ## Run Locally
 
