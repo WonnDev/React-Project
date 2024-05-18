@@ -10,7 +10,7 @@ import { auth } from "../firebase/firebase";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -31,6 +31,7 @@ const Login = () => {
         navigate("/");
       }
     });
+    // eslint-disable-next-line
   }, []);
 
   return (

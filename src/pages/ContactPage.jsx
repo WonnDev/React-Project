@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Footer, Navbar } from "../components";
-import {
-  checkForm,
-  submitForm,
-  clearForm,
-} from "../firebase/contactWithRealtimeDB";
+// import {
+//   checkForm,
+//   submitForm,
+//   clearForm,
+// } from "../firebase/contactWithRealtimeDB";
 import {
   checkFormFireStore,
   clearFormFirestore,

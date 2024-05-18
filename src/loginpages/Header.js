@@ -4,7 +4,6 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../assets/images/logo192.png";
 import { NavLink, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleLogoutRedux } from "../redux/action/userAction";
@@ -23,6 +22,7 @@ const Header = () => {
       navigate("/user/login");
       // toast.success("You had been Logout!");
     }
+    // eslint-disable-next-line
   }, [user]);
 
   return (

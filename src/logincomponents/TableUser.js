@@ -14,6 +14,7 @@ import "./TableUser.scss";
 
 const TableUsers = (props) => {
   const [listUsers, setListUsers] = useState([]);
+  // eslint-disable-next-line
   const [totalUsers, setTotalUser] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -24,12 +25,13 @@ const TableUsers = (props) => {
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [dataUserDelete, setDataUserDelete] = useState({});
 
-  //sort
+  // eslint-disable-next-line
   const [sortBy, setSortBy] = useState("asc"); // sort by ASC|DESC
+  // eslint-disable-next-line
   const [sortField, setSortField] = useState("id");
 
   //input search
-  const [inputSearch, setInputSearch] = useState("");
+  // const [inputSearch, setInputSearch] = useState("");
 
   //export CSV
   const [dataExport, setDataExport] = useState([]);
@@ -127,6 +129,7 @@ const TableUsers = (props) => {
     if (listUsers && listUsers.length > 0) {
       //build table data
       result.push(["Id", "Email", "First name", "Last name"]); //create header
+      // eslint-disable-next-line
       listUsers.map((item, index) => {
         //build body
         let arr = [];
@@ -156,6 +159,7 @@ const TableUsers = (props) => {
           let rawCSV = results.data;
           if (rawCSV.length > 0) {
             let result = [];
+            // eslint-disable-next-line
             rawCSV.map((item, index) => {
               if (index > 0) {
                 let obj = [];

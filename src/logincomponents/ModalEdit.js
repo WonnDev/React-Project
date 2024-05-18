@@ -32,6 +32,7 @@ const ModalEdit = (props) => {
       setName(dataUserEdit.first_name);
       setLastName(dataUserEdit.last_name);
     }
+    // eslint-disable-next-line
   }, [dataUserEdit]);
 
   return (

@@ -29,6 +29,7 @@ function App() {
     if (localStorage.getItem("token")) {
       dispatch(handleRefresh());
     }
+    // eslint-disable-next-line
   }, []);
 
   return (
